@@ -4,6 +4,8 @@ using System.Collections;
 public class DestroyOffscreen : MonoBehaviour {
 
 	public float offset = 16f;
+	public delegate void OnDestroy();
+	public event OnDestroy DestroyCallback;
 
 	private bool offscreen;
 	private float offscreenX = 0;
@@ -44,5 +46,9 @@ public class DestroyOffscreen : MonoBehaviour {
 	public void OnOutOfBounds(){
 		offscreen = false;
 		GameObjectUtility.Destroy (gameObject);
+
+		if (DestroyCallback != null) {
+			DestroyCallback();
+		}
 	}
 }
